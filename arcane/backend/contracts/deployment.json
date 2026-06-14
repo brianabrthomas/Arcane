@@ -1,0 +1,19 @@
+{
+  "contract_address": "0x9eb52339B52e71B1EFD5537947e75D23b3a7719B",
+  "deploy_tx_hash": "140678bd73c0fb90fa0bf9a131f5e45213410b70506f38612de246ecf99c3ed9",
+  "chain_id": 5042002,
+  "network": "arc_testnet",
+  "usdc_address": "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",
+  "operator_address": "0x4F6726d6FF89E42A8594D7C167AD2f11c8034577",
+  "admin_address": "0x4F6726d6FF89E42A8594D7C167AD2f11c8034577",
+  "block_number": 47003695,
+  "gas_used": 2382738,
+  "mode": "local_fork",
+  "arc_explorer": "https://testnet.arcscan.app/address/0x9eb52339B52e71B1EFD5537947e75D23b3a7719B",
+  "deploy_instructions": {
+    "step1": "Visit https://faucet.circle.com, select Arc Testnet, paste operator address 0x4F6726d6FF89E42A8594D7C167AD2f11c8034577",
+    "step2": "Set ARC_OPERATOR_PRIVATE_KEY=0xdc86226ec60f115aa3ff91fda698b8d935071dcff245524b5401df9c64fb021f in .env",
+    "step3": "Run: forge create contracts/src/ArcaneSettlement.sol:ArcaneSettlement --rpc-url https://rpc.testnet.arc.network --private-key $ARC_OPERATOR_PRIVATE_KEY --constructor-args 0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238 0x4F6726d6FF89E42A8594D7C167AD2f11c8034577 0x4F6726d6FF89E42A8594D7C167AD2f11c8034577",
+    "step4": "Update SETTLEMENT_CONTRACT_ADDRESS in .env with the deployed address"
+  }
+}
