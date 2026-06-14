@@ -1,0 +1,59 @@
+graph TD
+    User((Trader))
+    Admin((Resolver))
+    Ledger[Ledger Hardware Wallet]
+    
+    subgraph Frontend [Arcane Web App]
+        UI[Trading Interface]
+        DMK[Ledger DMK Snippet]
+        Web3[MetaMask]
+    end
+    
+    subgraph Backend [FastAPI Backend]
+        API[API Router]
+        AMM[LMSR Engine]
+        x402[x402 Nanopayments]
+        Settlement[Settlement Client]
+    end
+    
+    subgraph Agents [Agentic Pipeline]
+        Orch[Orchestrator]
+        Scout[CaseScout]
+        Prob[ProbabilityAgent]
+    end
+    
+    subgraph Infrastructure [Circle & Arc]
+        CircleGW[Circle Gateway API]
+        Arc[Arc Testnet]
+        Contract[ArcaneSettlement.sol]
+        USDC[Circle USDC Token]
+    end
+    
+    %% Trading Flow
+    User --> UI
+    UI -->|Sign < $100| Web3
+    UI -->|Sign >= $100| DMK
+    DMK -->|Clear Sign| Ledger
+    UI -->|Submit Trade| API
+    API --> AMM
+    AMM --> Settlement
+    Settlement -->|buy| Contract
+    Contract -->|Escrow| USDC
+    Contract -->|Receipt| Arc
+    
+    %% Agent Flow
+    UI -->|Request Research| x402
+    x402 -->|Auth & Settle| CircleGW
+    x402 --> Orch
+    Orch --> Scout
+    Scout --> Prob
+    Prob --> API
+    
+    %% Resolution Flow
+    Admin -->|Propose Resolution| API
+    API -->|Require Signature| Ledger
+    API -->|proposeResolution| Settlement
+    Settlement -->|Start Dispute| Contract
+    Contract -->|finalize| Contract
+    Contract -->|claimPayout| USDC
+    USDC -->|Transfer Winnings| User
